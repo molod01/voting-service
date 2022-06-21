@@ -1,0 +1,22 @@
+﻿@model User
+<h1>Sign Up</h1>
+<form method="post">
+	<div class="input-panel">
+		<span><label for="username">Логин</label></span>
+		<input id="username" type="text" asp-for="Username"/>
+		<span><label for="password">Пароль</label></span>
+		<input id="password" type="password" asp-for="Password"/>
+		<span><label for="confirmation">Подтвердите пароль</label></span>
+		<input id="confirmation" type="password" asp-for="PasswordConfirmation"/>
+		<input class="submit" type="submit" value="Регистрация"/>
+		<span asp-validation-for="Username"></span>
+		<span asp-validation-for="Password"></span>
+		<span asp-validation-for="Password"></span>
+		<span asp-validation-for="PasswordConfirmation"></span>
+	</div>
+</form>
+
+@section scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

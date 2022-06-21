@@ -1,0 +1,23 @@
+﻿<div class="profiles-list">
+	<div class="info">
+		<label><p>Avatar</p></label>
+	</div>
+	<div class="info">
+		<label><p>Username</p></label>
+	</div>
+	<div class="info">
+		<label><p>Votes</p></label>
+	</div>
+	@foreach (User user in @Model)
+	{
+		<div class="container">
+			<img src="@user.PicUrl" alt="userpic" />
+		</div>
+		<div class="info">
+			<label><h4>@user.Username</h4></label>
+		</div>
+		<div class="info">
+			<label><h4>@user.Variants.Count</h4></label>
+		</div>
+	}
+</div>

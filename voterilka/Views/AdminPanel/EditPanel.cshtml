@@ -1,0 +1,22 @@
+﻿@model Vote
+
+<div class="wrapper">
+	<form method="post" asp-action="EditPanel">
+		<div class="input-panel add-edit">
+			<input type="hidden" asp-for="Id"/>
+			<span><label for="name">Заголовок</label>
+			<input id="title" placeholder = "e.g. Your favorite cake?" type="text" asp-for="Title"/></span>
+			<label for="title">Варианты ответа</label>
+			<div class="variants" id="variants">
+				@for (var i = 0; i < @Model.Variants.Count; i++)
+				{
+					<input id="@i" type="text" name="[@i]" value="@Model.Variants.ElementAt(i).Name" />
+				} 
+				<input id="@Model.Variants.Count" type="text" name="[@Model.Variants.Count]" />
+			</div>
+			<span><label for="isAnonymous">Анонимное голосование</label>
+			<input id="isAnonymous" type="checkbox" asp-for="IsAnonymous" value="true"/></span>
+			<input class="submit" type="submit" value="Изменить"/>
+		</div>
+	</form>
+</div>

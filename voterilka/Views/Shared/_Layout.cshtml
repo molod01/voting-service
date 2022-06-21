@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Voter</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" asp-href-include="~/style.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<nav>
+				<ul class="navbar">
+					<li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+					<li><a asp-controller="Vote" asp-action="Showcase">Опросы</a></li>
+					@if (User.Identity.IsAuthenticated)
+					{
+						if (User.Identity.Name == "admin")
+						{
+							<li><a asp-controller="AdminPanel" asp-action="Panel">Админ панель</a></li>
+						}
+					}
+					else
+					{
+						<li><a asp-controller="Authentication" asp-action="SignUp">Регистрация</a></li>
+						<li><a asp-controller="Authentication" asp-action="SignIn">Вход</a></li>
+					}
+				</ul>
+				<div class="profile">
+					<a asp-controller="Profile" asp-action="Index">@User.Identity.Name</a>
+				</div>
+			</nav>
+		</header>
+		<main>
+			@RenderBody()
+		</main>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

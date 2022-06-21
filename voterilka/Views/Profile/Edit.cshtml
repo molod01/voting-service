@@ -1,0 +1,21 @@
+﻿@model User
+<h1>Смена пароля</h1>
+<form method="post">
+	<div class="input-panel">
+		<span><label>Старый пароль</label></span>
+		<input id="old_password" type="password" name="OldPassword"/>
+		<span><label for="password">Новый Пароль</label></span>
+		<input id="password" type="password" asp-for="Password"/>
+		<span><label for="confirmation">Подтвердите пароль</label></span>
+		<input id="confirmation" type="password" asp-for="PasswordConfirmation"/>
+		<input class="submit" type="submit" asp-action="ChangePassword" value="Сменить пароль"/>
+		<span asp-validation-for="Password"></span>
+		<span asp-validation-for="PasswordConfirmation"></span>
+		<span validation-for="OldPassword"></span>
+	</div>
+</form>
+
+@section scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

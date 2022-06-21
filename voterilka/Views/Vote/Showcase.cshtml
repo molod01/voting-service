@@ -1,0 +1,36 @@
+﻿@using System.Linq;
+@foreach (Vote vote in @Model)
+{
+	var date = @vote.CreationDate;
+	bool isVoted = false;
+	if (User.Identity.IsAuthenticated)
+	{
+		foreach (var variant in vote.Variants)
+		{
+			foreach (var user in variant.Voters)
+			{
+				if (user.Username == User.Identity.Name) isVoted = true;
+			}
+		}
+	}
+	string creation_date = String.Format($"{(date.Day > 9 ? date.Day : "0" + date.Day)}.{(date.Month > 9 ? date.Month : "0" + date.Month)}.{date.Year}");
+	<div class="vote-card">
+		<a class="label" asp-action="Poll" asp-route-id="@vote.Id">@vote.Title</a>
+		@if (isVoted)
+		{
+			<i class="fa fa-light">&#xf058</i>
+		}
+		<br>
+		<span class="vote-card-date">
+			@if (@vote.IsAnonymous)
+			{
+				<p>Anonymous poll</p>
+			}
+			else
+			{
+				<p>Open poll</p>
+			}
+			<p class="date">@creation_date</p>
+		</span>
+	</div>
+}

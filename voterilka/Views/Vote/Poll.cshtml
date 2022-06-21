@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Vote
+@{
+	var options = @Model.Variants.ToList();
+	int total_votes = @Model.Variants.Select(v => v.Voters).Sum(x => x.Count);
+	var date = @Model.CreationDate;
+	string creation_time = String.Format($"{date.Hour}:{date.Minute}");
+	string creation_date = String.Format($"{(date.Day > 9 ? date.Day : "0" + date.Day)}.{(date.Month > 9 ? date.Month : "0" + date.Month)}.{date.Year}");
+}
+<div class="vote">
+	<form name="voting" method="post" action="/Vote/Polling">
+		<h2>@Model.Title</h2>
+		<input type="hidden" name="voteid" value="@Model.Id" />
+		<div class="poll-area">
+			@for (int i = 0; i < options.Count; i++)
+			{
+				var voterscount = @Model.Variants.ToList()[i].Voters.Count;
+				int percent = (int)(((double)voterscount / total_votes) * 100);
+				<input type="radio" name="variant" id="input_@options[i].Id" value="@options[i].Id">
+				<label id="@options[i].Id" @*for="opt-1"*@ class="opt">
+					<div class="row">
+						<div class="column">
+							<span class="circle"></span>
+							<span class="text">@options[i].Name</span>
+						</div>
+						<span class="percent">@percent%</span>
+					</div>
+					<div class="progress" style='--w:@percent;'></div>
+				</label>
+			}
+			<p>Дата создания: @creation_time @creation_date</p>
+		</div>
+		<p><input class="submit" type="submit" value="Отправить" /></p>
+	</form>
+</div>

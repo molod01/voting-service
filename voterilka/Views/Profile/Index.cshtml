@@ -1,0 +1,25 @@
+﻿@model voterilka.Model.User
+<div class="wrapper">
+	<div class="profile-panel">
+		<div class="container">
+			<img src="@Model.PicUrl"/>
+			<div class="overlay">
+				@using (Html.BeginForm("Upload", "Profile", FormMethod.Post, new { id = "uploadimage", enctype = "multipart/form-data" }))
+				{
+					<input type="file" id="fileLoader" name="avatar" />
+					<p id="uploadpic" class="fa">&#xf093;</p>
+				}
+			</div>
+		</div>
+		<div class="info">
+			@using (Html.BeginForm("ChangeNickname", "Profile", FormMethod.Post))
+				{
+					<input name="newnick" type="text" id="nickname" value="@Model.Username"><a id="change_nick" class="fa">&#xf040;</a>
+				}
+			<hr />
+			<a class="admin-panel-button" asp-action="Edit">Сменить пароль</a>
+			<a class="admin-panel-button" asp-controller="Authentication" asp-action="Logout">Выход</a>
+			@*<input asp-controller="Profile" asp-action="Edit" class="submit" type="button" value="Сменить пароль" />*@
+		</div>
+	</div>
+</div>

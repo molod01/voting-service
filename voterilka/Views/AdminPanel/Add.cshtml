@@ -1,0 +1,14 @@
+﻿@model Vote
+<div class="wrapper">
+	<form method="post">
+		<div class="input-panel add-edit">
+			<span><label for="title">Заголовок</label>
+			<input id="title" placeholder = "e.g. Your favorite cake?" type="text" asp-for="Title"/></span>
+			<label for="title">Варианты ответа</label>
+			<div class="variants" id="variants"><input id="0" type="text" name="[0]"  placeholder = "Type option..." /></div>
+			<span><label for="isAnonymous">Анонимное голосование</label>
+			<input id="isAnonymous" type="checkbox" asp-for="IsAnonymous" value="true"/></span>
+			<input class="submit" type="submit" value="Добавить"/>
+		</div>
+	</form>
+</div>

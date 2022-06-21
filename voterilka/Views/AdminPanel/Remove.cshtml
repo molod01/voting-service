@@ -1,0 +1,14 @@
+﻿<div class="wrapper">
+	<form method="post">
+		<div class="input-panel">
+			<label for="list">Опрос</label>
+			<select id="list" name="title">
+				@foreach (Vote vote in @Model)
+				{
+					<option>@vote.Title</option>
+				}
+			</select>
+			<input class="submit" type="submit" value="Удалить"/>
+		</div>
+	</form>
+</div>

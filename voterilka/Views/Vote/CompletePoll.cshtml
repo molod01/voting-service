@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Vote
+@{
+	var options = @Model.Variants.ToList();
+	int selected_option_id = -1;
+	int total_votes = @Model.Variants.Select(v => v.Voters).Sum(x => x.Count);
+	foreach (var variant in @Model.Variants)
+	{
+		foreach (var voter in variant.Voters)
+		{
+			if (voter.Username == User.Identity.Name)
+			{
+				selected_option_id = variant.Id;
+				break;
+			}
+		}
+	}
+	var date = @Model.CreationDate;
+	string creation_time = String.Format($"{date.Hour}:{date.Minute}");
+	string creation_date = String.Format($"{(date.Day > 9 ? date.Day : "0" + date.Day)}.{(date.Month > 9 ? date.Month : "0" + date.Month)}.{date.Year}");
+}
+<div class="vote">
+		<h2>@Model.Title</h2>
+		<input type="hidden" name="voteid" value="@Model.Id" />
+		<div class="poll-area voted">
+			@for (int i = 0; i < options.Count; i++)
+			{
+				var voterscount = @Model.Variants.ToList()[i].Voters.Count;
+				int percent = (int)(((double)voterscount / total_votes) * 100);
+				<input type="radio" name="variant" id="input_@options[i].Id" value="@options[i].Id">
+				if (options[i].Id != selected_option_id)//если это не выбранный вариант
+				{
+				<label id="@options[i].Id" for="opt-1" class="opt-1 selectall">
+						<div class="row">
+							<div class="column">
+								<span class="circle"></span>
+								<span class="text">@options[i].Name</span>
+								@if (!@Model.IsAnonymous)
+								{
+									<span class="voters-container hidden">
+										@foreach (var voter in @options[i].Voters)
+										{
+											<img src="@voter.PicUrl" alt="@voter.Username" title="@voter.Username" />
+										}
+									</span>
+								}
+							</div>
+							<span class="percent">@percent%</span>
+						</div>
+						<div class="progress" style='--w:@percent;'></div>
+					</label>
+				}
+				else
+				{
+					<label id="@options[i].Id" for="opt-1" class="opt-1 selectall selected">
+						<div class="row">
+							<div class="column">
+								<span class="circle"></span>
+								<span class="text">@options[i].Name</span>
+								@if (!@Model.IsAnonymous)
+								{
+									<span class="voters-container hidden">
+										@foreach (var voter in @options[i].Voters)
+										{
+											<img src="@voter.PicUrl" alt="@voter.Username" title="@voter.Username" />
+										}
+									</span>
+								}
+							</div>
+							<span class="percent">@percent%</span>
+						</div>
+						<div class="progress" style='--w:@percent;'></div>
+					</label>
+				}
+			}
+			<p>Дата создания: @creation_time @creation_date</p>
+		</div>
+		<p><input class="submit" disabled="disabled" type="submit" value="Отправить" /></p>
+</div>
